@@ -5,6 +5,8 @@
 #include <string.h>
 #include <signal.h>
 #include <stdbool.h>
+
+
 const size_t LEN = 8;
 const size_t INC = 16;
 const char * FILELOG = "log-file.log";
@@ -48,7 +50,7 @@ void init_shell(){
         if(command[0] == NULL) continue;
 
         size_command = length_of(command);
-        if (strcmp(command[size_command -2],"&") == 0){
+        if (strcmp(command[size_command -2],"#") == 0){
         	background = true;
         	command[size_command - 2] = NULL;
         }
@@ -67,7 +69,7 @@ void init_shell(){
         	exit(EXIT_SUCCESS);
         }
 
-    	temp = child_pid = fork();
+    	child_pid = fork();
     	if(child_pid < 0 )
     		perror("! ");
     	else if(child_pid == 0 ){
@@ -98,7 +100,7 @@ void handler_child(int sigchhild){
     FILE *f;
     f = fopen(FILELOG, "a+");
     if (f == NULL) { return;}
-    fprintf(f, "child Process  terminated\n",);
+    fprintf(f, "child Process  terminated\n");
     fclose(f);
 }
 
